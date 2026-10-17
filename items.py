@@ -4,6 +4,15 @@
 
 # ------------------------------ DATA OF EVERY ITEM -------------------------------
 
+sword1 = {
+        "name": "Great Sword of Might",
+        "damage": 15,
+        "defense": 0,
+        "rarity": "Common",
+        "required_strength": 10,
+        "required_intelligence": 10
+    }
+
 weapon_data = {
     "Sword": {
         "name": "Great Sword of Might",
