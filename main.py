@@ -208,8 +208,6 @@ while running: # THE GAME LOOP
         # -------------------------------------------------------------------------
         case "Default": # Default event - game intro
 
-
-
             # Main page - Character sheet
             print_center(f'''
 {b}[{playerName} {lable} {playerClass}]{bff}
@@ -290,6 +288,51 @@ You entered the door.
                     description += f"~ ~ ~{eventDescription["opened_chest_in_dark_room"]}\n{text["found_nothing"]}\n"
                     input()
             clear()
+        case "Menu_Items":
+
+            items = [Weapon_DwarfHammer, Weapon_GreatSword, Weapon_MagicWand, Weapon_ShortDagger, Weapon_SpikySpear, Weapon_WideShield, Armor_MysticArmor]
+
+            for item in items:
+
+                name = item["name"]
+                _rar = item["rarity"]
+                _str = item["required_strength"]
+                _int = item["required_intelligence"]
+                requirement = ""
+
+                if _str - endurance > 0:
+                    requirement += "\nrequires +"+str(_str - endurance)+" END."
+
+                if _int - intelligence > 0:
+                    requirement +="\nrequires +" + str(_int - intelligence) + " INT."
+
+                if _str > endurance or _int > intelligence:
+                    name = f"{d}({_rar}%) {s}{name}{sff}"
+                else:
+                    name = f"({_rar}%) {name}"
+
+                print_center(f"\n{name}{requirement}{dff}")
+
+
+            input()
+            clear()
+
+
+"""
+
+                if _str > endurance or _int > intelligence:
+                    print_center(f'''
+{s}{d}({_rar}%) {name}{sff}
+Strength: {endurance}/{_str} => {"requires +"+str(_str-endurance)+" END." if _str-endurance > 0 else "OK"}
+Intelli.: {intelligence}/{_int} => {"requires +"+str(_int-intelligence)+" INT." if _int-intelligence > 0 else "OK"}{dff}''')
+
+                else:
+                    print_center(f'''
+{name} - {_rar}%
+Strength: {endurance}/{_str}
+Intelli.: {intelligence}/{_int}''')
+
+"""
 
 
 

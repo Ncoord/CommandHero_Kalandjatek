@@ -35,7 +35,6 @@ class randomname(Enum):
     GREEN: str = "G"
     BLUE: str = "B"
 """
-from unittest import result
 
 """
 
@@ -108,10 +107,20 @@ from random import randint
 def random_item(list):
     weapons = []
     for item in list:
-        weapons.append(weapon_data[item]["name"])
+        #weapons.append(weapon_data[item]["name"])
+        return
 
     number = randint(0, len(weapons)-1)
 
     return weapons[number]
 
-print(random_item(weapon_data))
+#print(random_item(weapon_data))
+
+
+
+
+
+
+
+
+
