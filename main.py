@@ -174,6 +174,10 @@ if not playing_music:
 
 # -------------------------- RUNNING THE MAIN GAME LOOP --------------------------
 
+
+inventory = [Weapon_ShortDagger, Weapon_WideShield, Weapon_SpikySpear, Weapon_MagicWand]
+
+
 while running: # THE GAME LOOP
     # Set healtpoint limit -------------------------------------------------------
     healthpoint = healthpointMax if healthpoint > healthpointMax else healthpoint
@@ -233,6 +237,8 @@ HP: {healthpoint}/{healthpointMax} | END : {endurance} | INT : {intelligence}
                 case "3":
                     played_music.kill()
                     playing_music = False
+                case "i":
+                    event = "Inventory"
             clear()
 
         # -------------------------------------------------------------------------
@@ -272,11 +278,11 @@ You entered the door.
                             _case = (choose_from([Case_SimpleTrap, Case_SimpleChest, Case_EnemyGoblin]))
                             match _case["type"]:
                                 case "Chest":
-                                    event = "Found_Item"
+                                    event = "Found_Item1"
                                 case "Trap":
-                                    event = "Trap"
+                                    event = "Simple_Trap1"
                                 case "Goblin":
-                                    event = "Enemy"
+                                    event = "Goblin1"
                             break
                         elif choice == "n":
                             event = "Default"
@@ -296,53 +302,50 @@ You entered the door.
                     description += f"~ ~ ~{eventDescription["opened_chest_in_dark_room"]}\n{text["found_nothing"]}\n"
                     input()
             clear()
-        case "Menu_Items":
+        case "Inventory":
 
-            items = [Weapon_ShortDagger, HealItem_BigPotion, Item_Skull, Item_Papper, HealItem_SmallPotion, Item_Ash,
-                     Item_Dust]
+            for item in inventory:
 
-            for item in items:
-
-                name = item["name"]
+                _name = item["name"]
                 _rar = item["rarity"]
-                _str = item["required_strength"]
-                _int = item["required_intelligence"]
-                requirement = ""
+                _str = item["req_streng"]
+                _int = item["req_intell"]
+                _req= ""
 
                 if _str - endurance > 0:
-                    requirement += "\nrequires +"+str(_str - endurance)+" END."
+                    _req += "\nrequires +"+str(_str - endurance)+" END."
 
                 if _int - intelligence > 0:
-                    requirement +="\nrequires +" + str(_int - intelligence) + " INT."
+                    _req +="\nrequires +" + str(_int - intelligence) + " INT."
 
                 if _str > endurance or _int > intelligence:
-                    name = f"{d}({_rar}%) {s}{name}{sff}"
+                    _name = f"{d}({_rar}%) {s}{_name}{sff}"
                 else:
-                    name = f"({_rar}%) {name}"
+                    _name = f"({_rar}%) {_name}"
 
-                print_center(f"\n{name}{requirement}{dff}")
+                print_center(f"\n{_name}{_req}{dff}")
 
             input()
             clear()
 
-        case "Enemy":
+        case "Goblin1":
 
             healthpoint -= randint(1, 30)
 
             print_center(f'''{read_txt(r"ascii\void.txt")}{c1}ENEMY{c}''')
 
-            description += "\nGoblins got your head, it hurts...\n"
+            description += "\nA goblin hit your head, it hurts...\n"
 
             input()
             clear()
             event = "Default"
 
-        case "Found_Item":
+        case "Found_Item1":
 
             items = [Weapon_ShortDagger, HealItem_BigPotion, Item_Skull, Item_Papper, HealItem_SmallPotion,
                      Item_Ash, Item_Dust]
 
-            _item = choose_from(items)["name"]
+            _item = choose_from(items)
 
             description += eventDescription["open_chest_in_dark_room"]
 
@@ -352,17 +355,14 @@ You entered the door.
 {read_txt(r"ascii\void.txt")}
 {eventDescription["open_chest_in_dark_room"]}
 
-{text["found_common"]} {_item}
-
-
-{inventory}
+{text["found_common"]} {_item["name"]}
 ''')
 
             input()
             clear()
             event = "Default"
 
-        case "Trap":
+        case "Trap1":
 
             healthpoint -= randint(1, 10)
 
