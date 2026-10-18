@@ -174,10 +174,6 @@ if not playing_music:
 
 # -------------------------- RUNNING THE MAIN GAME LOOP --------------------------
 
-
-inventory = [Weapon_ShortDagger, Weapon_WideShield, Weapon_SpikySpear, Weapon_MagicWand]
-
-
 while running: # THE GAME LOOP
     # Set healtpoint limit -------------------------------------------------------
     healthpoint = healthpointMax if healthpoint > healthpointMax else healthpoint
@@ -215,17 +211,17 @@ while running: # THE GAME LOOP
 
             # Main page - Character sheet
             print_center(f'''
-{b}[{playerName} {lable} {playerClass}]{bff}
-{'-' * 50}
-HP: {healthpoint}/{healthpointMax} | END : {endurance} | INT : {intelligence}
-{'-' * 50}
 {img}
 {description}
-
 
 (1) Try open the door (exit game)
 {"(2) Inspect the chest" if not chest1_found else f"{d}(2) Inspect again the chest{dff}"}
 {"(3) Stop playing the music" if playing_music else f"{d}(3) Stop playing the music{dff}"}
+
+{'-' * 50}
+Hp: {healthpoint}/{healthpointMax} | End: {endurance} | Int: {intelligence} | Inv: {len(inventory)} items
+{'-' * 50}
+{b}[{playerName} {lable} {playerClass}]{bff}
 ''')
             choice = input("\n> ")
 
@@ -238,6 +234,7 @@ HP: {healthpoint}/{healthpointMax} | END : {endurance} | INT : {intelligence}
                     played_music.kill()
                     playing_music = False
                 case "i":
+                    previous_event = event
                     event = "Inventory"
             clear()
 
@@ -253,11 +250,8 @@ You entered the door.
 {text["press_enter"]}
 ''')
             input()
-
             event = "Default"
             img = read_txt(r"ascii\room2.txt")
-            healthpoint = 0
-
             clear()
 
         # -------------------------------------------------------------------------
@@ -265,7 +259,8 @@ You entered the door.
             while True:
                 if not chest1_found:
                     print_center(f'''
-{read_txt(r"ascii\chest1.txt")}{eventDescription["inspect_chest"]}
+{read_txt(r"ascii\chest1.txt")}
+{eventDescription["inspect_chest"]}
 
 
 (y) Yes, definitely
@@ -275,17 +270,20 @@ You entered the door.
 
                     if choice != "":
                         if choice == "y":
-                            _case = (choose_from([Case_SimpleTrap, Case_SimpleChest, Case_EnemyGoblin]))
+                            _case = (choose_from([Case_SimpleTrap, Case_SimpleChest]))
                             match _case["type"]:
                                 case "Chest":
                                     event = "Found_Item1"
                                 case "Trap":
                                     event = "Simple_Trap1"
-                                case "Goblin":
-                                    event = "Goblin1"
+                            chest1_found = True
                             break
                         elif choice == "n":
                             event = "Default"
+                            break
+                        elif choice == "i":
+                            previous_event = event
+                            event = "Inventory"
                             break
                     clear()
 
@@ -306,33 +304,41 @@ You entered the door.
 
             for item in inventory:
 
-                _name = item["name"]
-                _rar = item["rarity"]
-                _str = item["req_streng"]
-                _int = item["req_intell"]
-                _req= ""
+                if item["type"] == "Weapon" or item["type"] == "Armor":
+                    _name = item["name"]
+                    _rar = item["rarity"]
+                    _str = item["req_streng"]
+                    _int = item["req_intell"]
+                    _dmg = item["damage"]
+                    _def = item["defense"]
+                    _req= ""
 
-                if _str - endurance > 0:
-                    _req += "\nrequires +"+str(_str - endurance)+" END."
+                    if _str - endurance > 0:
+                        _req += "\nrequires +"+str(_str - endurance)+" END."
 
-                if _int - intelligence > 0:
-                    _req +="\nrequires +" + str(_int - intelligence) + " INT."
+                    if _int - intelligence > 0:
+                        _req += "\nrequires +" + str(_int - intelligence) + " INT."
 
-                if _str > endurance or _int > intelligence:
-                    _name = f"{d}({_rar}%) {s}{_name}{sff}"
+                    if _str > endurance or _int > intelligence:
+                        _name = f"{d}({_rar}%) {s}{_name}{sff}"
+                    else:
+                        _name = f"({_rar}%) {_name}"
+
+                    print_center(f"\n{_name}{_req}{dff}")
                 else:
-                    _name = f"({_rar}%) {_name}"
-
-                print_center(f"\n{_name}{_req}{dff}")
+                    _name = item["name"]
+                    _rar = item["rarity"]
+                    print_center(f"\n({_rar}%) {_name}")
 
             input()
             clear()
+            event = previous_event
 
         case "Goblin1":
 
             healthpoint -= randint(1, 30)
 
-            print_center(f'''{read_txt(r"ascii\void.txt")}{c1}ENEMY{c}''')
+            print_center(f'''{read_txt(r"ascii\void.txt")}{c1}A goblin hit your head, it hurts...{c}''')
 
             description += "\nA goblin hit your head, it hurts...\n"
 
@@ -343,7 +349,7 @@ You entered the door.
         case "Found_Item1":
 
             items = [Weapon_ShortDagger, HealItem_BigPotion, Item_Skull, Item_Papper, HealItem_SmallPotion,
-                     Item_Ash, Item_Dust]
+                     Item_Ash, Item_Dust, ]
 
             _item = choose_from(items)
 
@@ -362,7 +368,7 @@ You entered the door.
             clear()
             event = "Default"
 
-        case "Trap1":
+        case "Simple_Trap1":
 
             healthpoint -= randint(1, 10)
 
@@ -380,26 +386,6 @@ You entered the door.
 
 
 played_music.kill()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

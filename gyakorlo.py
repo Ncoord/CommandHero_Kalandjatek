@@ -101,9 +101,12 @@ while True:
 
 #from functions import input_r
 
-#print("> ")
+from functions import input_r
 
-#input_r()
+"""print("> ")
+input_r()"""
+
+
 
 """
 from items import *
