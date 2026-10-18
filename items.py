@@ -26,7 +26,7 @@ Armor_MysticArmor = {
     "name": "Mystic Armor",
     "damage": 0,
     "defense": 50,
-    "rarity": 73,
+    "rarity": 43,
     "required_strength": 23,
     "required_intelligence": 21
 }
@@ -35,7 +35,7 @@ Weapon_WideShield = {
     "name": "Wide Shield",
     "damage": 11,
     "defense": 43,
-    "rarity": 61,
+    "rarity": 23,
     "required_strength": 32,
     "required_intelligence": 13
 }
@@ -44,7 +44,7 @@ Weapon_ShortDagger = {
     "name": "Short Dagger",
     "damage": 25,
     "defense": 8,
-    "rarity": 74,
+    "rarity": 32,
     "required_strength": 15,
     "required_intelligence": 11
 }
@@ -70,13 +70,13 @@ Weapon_MagicWand = {
 HealItem_BigPotion = {
     "name": "Potion of Great Healing",
     "damage":75,
-    "rarity": 50
+    "rarity": 18
 }
 
 HealItem_SmallPotion = {
     "name": "Potion of Small Healing",
     "healing": 25,
-    "rarity": 75
+    "rarity": 36
 }
 
 Item_Papper = {
@@ -86,7 +86,7 @@ Item_Papper = {
 
 Item_Ash = {
     "name": "dusty ash",
-    "rarity": 3
+    "rarity": 8
 }
 Item_Skull = {
     "name": "terrifying skull",
@@ -103,9 +103,7 @@ Item_Pebble = {
 }
 Item_Dust = {
     "name": "whirling dust",
-    "rarity": 3
+    "rarity": 8
 }
-
-
 
 # selling price, purchase price

@@ -9,6 +9,7 @@ from descriptions import *
 from variables import *
 import subprocess
 from items import *
+from cases import *
 
 # ----------------------------- CLEARING THE TERMINAL -----------------------------
 
@@ -78,13 +79,13 @@ while asking: # Get the player's name and class
 
 {d}(scroll up for more){dff}
 ''')
-        chooseenClass = input("\n> ")
+        choosenClass = input("\n> ")
         clear()
 
-        if chooseenClass == "1" or chooseenClass == "2" or chooseenClass == "3": break
+        if choosenClass == "1" or choosenClass == "2" or choosenClass == "3": break
 
     # -----------------------------------------------------------------------------
-    match chooseenClass: # Set the correct value of the class variable
+    match choosenClass: # Set the correct value of the class variable
 
         case "1": # Soldier
             playerClass = classes[0]
@@ -265,10 +266,17 @@ You entered the door.
 (n) No, it's too suspicious
 ''')
                     choice = input("> ")
+
                     if choice != "":
                         if choice == "y":
-                            openChest()
-                            event = "Default"
+                            _case = (choose_from([Case_SimpleTrap, Case_SimpleChest, Case_EnemyGoblin]))
+                            match _case["type"]:
+                                case "Chest":
+                                    event = "Found_Item"
+                                case "Trap":
+                                    event = "Trap"
+                                case "Goblin":
+                                    event = "Enemy"
                             break
                         elif choice == "n":
                             event = "Default"
@@ -290,7 +298,8 @@ You entered the door.
             clear()
         case "Menu_Items":
 
-            items = [Weapon_DwarfHammer, Weapon_GreatSword, Weapon_MagicWand, Weapon_ShortDagger, Weapon_SpikySpear, Weapon_WideShield, Armor_MysticArmor]
+            items = [Weapon_ShortDagger, HealItem_BigPotion, Item_Skull, Item_Papper, HealItem_SmallPotion, Item_Ash,
+                     Item_Dust]
 
             for item in items:
 
@@ -313,27 +322,60 @@ You entered the door.
 
                 print_center(f"\n{name}{requirement}{dff}")
 
-
             input()
             clear()
 
+        case "Enemy":
 
-"""
+            healthpoint -= randint(1, 30)
 
-                if _str > endurance or _int > intelligence:
-                    print_center(f'''
-{s}{d}({_rar}%) {name}{sff}
-Strength: {endurance}/{_str} => {"requires +"+str(_str-endurance)+" END." if _str-endurance > 0 else "OK"}
-Intelli.: {intelligence}/{_int} => {"requires +"+str(_int-intelligence)+" INT." if _int-intelligence > 0 else "OK"}{dff}''')
+            print_center(f'''{read_txt(r"ascii\void.txt")}{c1}ENEMY{c}''')
 
-                else:
-                    print_center(f'''
-{name} - {_rar}%
-Strength: {endurance}/{_str}
-Intelli.: {intelligence}/{_int}''')
+            description += "\nGoblins got your head, it hurts...\n"
 
-"""
+            input()
+            clear()
+            event = "Default"
 
+        case "Found_Item":
+
+            items = [Weapon_ShortDagger, HealItem_BigPotion, Item_Skull, Item_Papper, HealItem_SmallPotion,
+                     Item_Ash, Item_Dust]
+
+            _item = choose_from(items)["name"]
+
+            description += eventDescription["open_chest_in_dark_room"]
+
+            inventory.append(_item)
+
+            print_center(f'''
+{read_txt(r"ascii\void.txt")}
+{eventDescription["open_chest_in_dark_room"]}
+
+{text["found_common"]} {_item}
+
+
+{inventory}
+''')
+
+            input()
+            clear()
+            event = "Default"
+
+        case "Trap":
+
+            healthpoint -= randint(1, 10)
+
+            description += "\nIt's a trap inside of the chest!\n"
+
+            print_center(f'''
+{read_txt(r"ascii\void.txt")}
+{c1}It's a trap inside of the chest!{c}
+''')
+
+            input()
+            clear()
+            event = "Default"
 
 
 

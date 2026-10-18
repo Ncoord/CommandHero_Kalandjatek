@@ -3,12 +3,16 @@ import os
 import shutil
 import re
 from pathlib import Path
-from random import randint
 from msvcrt import *
+from random import choices
 
-def random_percent():
-    randomNum = randint(0,100)
-    return randomNum
+
+def choose_from(list_of_items):
+    weights = [item["rarity"] for item in list_of_items]
+
+    chosen_item = choices(list_of_items, weights=weights, k=1)[0]
+
+    return chosen_item
 
 def input_r():
     while True:
@@ -45,8 +49,7 @@ def eventEnemy(playerHealth, damage):
     return playerHealth
 
 def openChest():
-    num = random_percent()
-    return num
+    return
 
 def openDoor():
     return
