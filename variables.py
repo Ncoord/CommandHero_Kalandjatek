@@ -16,6 +16,7 @@ playing_music = False
 classes = ["Soldier", "Mage", "Thief", "Undefined"]
 
 event = "Default"
+previous_event = "Default"
 
 inventory = []
 

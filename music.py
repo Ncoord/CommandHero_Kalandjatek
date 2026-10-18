@@ -1,6 +1,5 @@
 
 import winsound
-from pathlib import Path
 import time
 import sys
 import wave
