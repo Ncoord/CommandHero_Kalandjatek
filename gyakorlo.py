@@ -35,7 +35,10 @@ class randomname(Enum):
     GREEN: str = "G"
     BLUE: str = "B"
 """
-from unittest import result
+from operator import index
+from shlex import split
+
+import items
 
 """
 
@@ -102,16 +105,61 @@ while True:
 
 #input_r()
 
+"""
 from items import *
 from random import randint
 
-def random_item(list):
-    weapons = []
-    for item in list:
-        weapons.append(weapon_data[item]["name"])
+items = [
+    Weapon_DwarfHammer,
+    Weapon_GreatSword,
+    Weapon_MagicWand,
+    Weapon_ShortDagger,
+    Weapon_SpikySpear,
+    Weapon_WideShield,
+    Armor_MysticArmor,
+    Item_Ash,
+    Item_Dust,
+    Item_Leather,
+    Item_Papper,
+    Item_Pebble,
+    Item_Skull,
+    HealItem_BigPotion,
+    HealItem_SmallPotion
+]
 
-    number = randint(0, len(weapons)-1)
+def random_item(list_of_items):
+    percentage_sum = 1
+    rarity_sum = 0
+    intervals = []
+    chosen_item = None
 
-    return weapons[number]
+    for item in list_of_items:
+        rarity_sum += (item["rarity"])
 
-print(random_item(weapon_data))
+    for item in list_of_items:
+        new_percent = round((item["rarity"] * 10000) / rarity_sum)
+
+        interval = range(percentage_sum, percentage_sum + new_percent)
+        percentage_sum += new_percent
+
+        intervals.append(interval)
+
+    random_num = randint(1, percentage_sum)
+
+    for interval in intervals:
+        if random_num in interval:
+            itemindex = intervals.index(interval)
+
+            print(f'''
+Random szám: {random_num} a "{interval}" {str(itemindex + 1)}. elemszámú tartományban.
+Maximális tartományérték: {percentage_sum}%
+''')
+
+            chosen_item = list_of_items[itemindex]
+
+    print(f"\n{chosen_item['name']} {chosen_item['rarity']}%")
+
+random_item(items)
+
+"""
+
