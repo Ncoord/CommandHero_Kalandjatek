@@ -271,7 +271,7 @@ You entered the door.
                     if choice != "":
                         if choice == "y":
                             _case = (choose_from([Case_SimpleTrap, Case_SimpleChest]))
-                            match _case["type"]:
+                            match _case[type]:
                                 case "Chest":
                                     event = "Found_Item1"
                                 case "Trap":
@@ -297,20 +297,23 @@ You entered the door.
 
 
 {text["press_enter"]}''')
-                    description += f"~ ~ ~{eventDescription["opened_chest_in_dark_room"]}\n{text["found_nothing"]}\n"
+                    #description += f"~ ~ ~{eventDescription["opened_chest_in_dark_room"]}\n{text["found_nothing"]}\n"
                     input()
+                    clear()
+                    event = "Default"
+                    break
             clear()
         case "Inventory":
 
             for item in inventory:
 
-                if item["type"] == "Weapon" or item["type"] == "Armor":
-                    _name = item["name"]
-                    _rar = item["rarity"]
-                    _str = item["req_streng"]
-                    _int = item["req_intell"]
-                    _dmg = item["damage"]
-                    _def = item["defense"]
+                if item[type] == "Weapon" or item[type] == "Armor":
+                    _name = item[name]
+                    _rar = item[rarity]
+                    _str = item[req_streng]
+                    _int = item[req_intell]
+                    _dmg = item[damage]
+                    _def = item[defense]
                     _req= ""
 
                     if _str - endurance > 0:
@@ -326,8 +329,8 @@ You entered the door.
 
                     print_center(f"\n{_name}{_req}{dff}")
                 else:
-                    _name = item["name"]
-                    _rar = item["rarity"]
+                    _name = item[name]
+                    _rar = item[rarity]
                     print_center(f"\n({_rar}%) {_name}")
 
             input()
@@ -361,9 +364,8 @@ You entered the door.
 {read_txt(r"ascii\void.txt")}
 {eventDescription["open_chest_in_dark_room"]}
 
-{text["found_common"]} {_item["name"]}
+{text["found_common"]} {_item[name]}
 ''')
-
             input()
             clear()
             event = "Default"
@@ -378,7 +380,6 @@ You entered the door.
 {read_txt(r"ascii\void.txt")}
 {c1}It's a trap inside of the chest!{c}
 ''')
-
             input()
             clear()
             event = "Default"

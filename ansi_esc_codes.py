@@ -1,3 +1,5 @@
+
+
 # -------------------- DEFINING ESCAPE CODE FOR TEXT FORMATTING --------------------
 
 b = "\033[1m"               # BOLD
