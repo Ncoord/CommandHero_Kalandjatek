@@ -7,9 +7,9 @@ from random import randint
 from functions import *
 from descriptions import *
 from variables import *
-import subprocess
 from items import *
 from cases import *
+import subprocess
 
 # ----------------------------- CLEARING THE TERMINAL -----------------------------
 
@@ -31,47 +31,47 @@ while asking: # Get the player's name and class
 {"\n"*3}
 {read_txt(r"ascii\title.txt")}
 
-{text["title"]}
+{text[title]}
 
 
         
-{eventDescription["greeting"]}
-{eventDescription["what_is_name"]}
+{eventDescription[greeting]}
+{eventDescription[what_is_name]}
 ''')
-        playerName = input("\n> ")
+        player["name"] = input("\n> ")
         clear()
 
-        if playerName != "": break
+        if player["name"] != "": break
         else:
             print_center(f'''
 {read_txt(r"ascii\void.txt")}
-{c1}{text["invalid_name"]}
+{c1}{text[invalid_name]}
 
 
 
-{text["try_again"]}{r}{c}''')
+{text[try_again]}{r}{c}''')
             input("\n> ")
             clear()
 
     # -----------------------------------------------------------------------------
     while True: # Draw a screen for choosing a class
         print_center(f'''
-{c3}{b}[{text["soldier_title"]}]{bff}
+{c3}{b}[{text[soldier_title]}]{bff}
 {read_txt(r"ascii\soldier.txt")}
-{eventDescription["soldier_class"]}{r}
+{eventDescription[soldier_class]}{r}
 
-{c6}{b}[{text["mage_title"]}]{bff}
+{c6}{b}[{text[mage_title]}]{bff}
 {read_txt(r"ascii\mage.txt")}
-{eventDescription["mage_class"]}{r}
+{eventDescription[mage_class]}{r}
 
-{c2}{b}[{text["thief_title"]}]{bff}
+{c2}{b}[{text[thief_title]}]{bff}
 {read_txt(r"ascii\thief.txt")}
-{eventDescription["thief_class"]}{r}
+{eventDescription[thief_class]}{r}
 
 
 
 
-{text["choose_class"]}
+{text[choose_class]}
 
 {c3}(1){r} The Honorable Path of Soldiers
 {c6}(2){r} Mysterious Beings — The Magicians
@@ -82,37 +82,46 @@ while asking: # Get the player's name and class
         choosenClass = input("\n> ")
         clear()
 
-        if choosenClass == "1" or choosenClass == "2" or choosenClass == "3": break
+        if choosenClass == "1" or choosenClass == "2" or choosenClass == "3" or choosenClass == "Ncoord": break
 
     # -----------------------------------------------------------------------------
     match choosenClass: # Set the correct value of the class variable
 
         case "1": # Soldier
-            playerClass = classes[0]
             c = c3
-            healthpointMax = 80 + randint(1, 30)
-            healthpoint = healthpointMax
-            endurance = randint(round(healthpointMax / 2), round(healthpointMax * 0.75))
-            intelligence = randint(20, 50)
+            player["class"] = classes[0]
+            player["hp_max"] = 80 + randint(1, 30)
+            player["hp"] = player["hp_max"]
+            player["endur"] = randint(round(player["hp_max"] / 2), round(player["hp_max"] * 0.75))
+            player["intell"] = randint(20, 50)
+            player["salutation"] = "the mighty"
 
         case "2": # Mage
-            playerClass = classes[1]
             c = c6
-            healthpointMax = 70 + randint(1, 10)
-            healthpoint = healthpointMax
-            endurance = randint(round(healthpointMax / 5), round(healthpointMax / 2))
-            intelligence = randint(50, 90)
+            player["class"] = classes[1]
+            player["hp_max"] = 70 + randint(1, 10)
+            player["hp"] = player["hp_max"]
+            player["endur"] = randint(round(player["hp_max"] / 5), round(player["hp_max"] / 2))
+            player["intell"] = randint(50, 90)
+            player["salutation"] = "the powerful"
 
         case "3": # Thief
-            playerClass = classes[2]
             c = c2
-            healthpointMax = 100 + randint(1, 50)
-            healthpoint = healthpointMax
-            endurance = randint(round(healthpointMax / 6), round(healthpointMax / 3))
-            intelligence = randint(35, 65)
+            player["class"] = classes[2]
+            player["hp_max"] = 100 + randint(1, 50)
+            player["hp"] = player["hp_max"]
+            player["endur"] = randint(round(player["hp_max"] / 6), round(player["hp_max"] / 3))
+            player["intell"] = randint(35, 65)
+            player["salutation"] = "the skillful"
 
-        case _:
-            playerClass = classes[4]    # Undefined
+        case _: # Undefined
+            c = "\033[38;5;222m"
+            player["class"] = classes[3]
+            player["hp_max"] = 1000
+            player["hp"] = player["hp_max"]
+            player["endur"] = round(player["hp_max"] * 0.8)
+            player["intell"] = 1000
+            player["salutation"] = "the"
 
     # -----------------------------------------------------------------------------
     while True: # draw sreen for accepting name and class
@@ -122,19 +131,19 @@ while asking: # Get the player's name and class
 These are your stats:
 
 {'-' * 28}
-Your Name     |   {playerName}
-Chosen Class  |   {c}{playerClass}{r}
-Healthpoint   |   {healthpoint}/{healthpointMax}
-Endurance     |   {endurance}
-Intelligence  |   {intelligence}
+Your Name: {player["name"]}
+Chosen Class: {c}{player["class"]}{r}
+Healthpoint: {player["hp"]}/{player["hp_max"]}
+Endurance: {player["endur"]}
+Intelligence: {player["intell"]}
 {'-' * 28}
 
-Is this correct?
+{"Is this correct?" if not player["class"] == "Undefined" else "You're about to enter God Mode as the Undefined class.\n\nDo you wish to proceed?"}
 
 
 
-(y) Oh hell yes, bring it on already!
-(n) Definitely a no! 
+(y) Oh, hell yes! Bring it on already!
+(n) Hell no. Not a chance!
 ''')
         is_ok = input("\n> ")
         clear()
@@ -143,23 +152,14 @@ Is this correct?
             asking = False
             played_music.kill()
             playing_music = False
+
             break
         elif is_ok == "n":
             c = c9
             break
 
-# ------------------------ DEFINE LABEL FOR PLAYER'S TITLE ------------------------
-
-if playerClass == "Mage":
-    lable = "the powerful"
-if playerClass == "Soldier":
-    lable = "the mighty"
-if playerClass == "Thief":
-    lable = "the skillful"
-
 # --------------------- CLEAR TERMINAL AND SET CONSOLE COLOR ---------------------
-
-cmd(c)
+print(f"{c}")
 clear()
 
 # ----------------------------- SET THE FIRST IMAGE ------------------------------
@@ -176,10 +176,10 @@ if not playing_music:
 
 while running: # THE GAME LOOP
     # Set healtpoint limit -------------------------------------------------------
-    healthpoint = healthpointMax if healthpoint > healthpointMax else healthpoint
+    player["hp"] = player["hp_max"] if player["hp"] > player["hp_max"] else player["hp"]
 
     # Break the while loop if the player is dead ---------------------------------
-    if healthpoint <= 0:
+    if player["hp"] <= 0:
         # Play sound
         subprocess.Popen(["python", "music.py", "sound/gameover.wav", str(int(False))])
         # Game over screen
@@ -219,9 +219,9 @@ while running: # THE GAME LOOP
 {"(3) Stop playing the music" if playing_music else f"{d}(3) Stop playing the music{dff}"}
 
 {'-' * 50}
-Hp: {healthpoint}/{healthpointMax} | End: {endurance} | Int: {intelligence} | Inv: {len(inventory)} items
+Hp: {player["hp"]}/{player["hp_max"]} | End: {player["endur"]} | Int: {player["intell"]} | Inv: {len(inventory)} items
 {'-' * 50}
-{b}[{playerName} {lable} {playerClass}]{bff}
+{b}[{player["name"]} {player["salutation"]} {player["class"]}]{bff}
 ''')
             choice = input("\n> ")
 
@@ -247,7 +247,7 @@ You entered the door.
 
 
 
-{text["press_enter"]}
+{text[press_enter]}
 ''')
             input()
             event = "Default"
@@ -260,7 +260,7 @@ You entered the door.
                 if not chest1_found:
                     print_center(f'''
 {read_txt(r"ascii\chest1.txt")}
-{eventDescription["inspect_chest"]}
+{eventDescription[inspect_chest]}
 
 
 (y) Yes, definitely
@@ -276,7 +276,7 @@ You entered the door.
                                     event = "Found_Item1"
                                 case "Trap":
                                     event = "Simple_Trap1"
-                            chest1_found = True
+                            #chest1_found = True
                             break
                         elif choice == "n":
                             event = "Default"
@@ -291,26 +291,26 @@ You entered the door.
                     print_center(f'''
 {read_txt(r"ascii\void.txt")}
 
-{eventDescription["opened_chest_in_dark_room"]}
-{text["found_nothing"]}
+{eventDescription[opened_chest_in_dark_room]}
+{text[found_nothing]}
 
 
 
 {text["press_enter"]}''')
-                    description += f"~ ~ ~{eventDescription["opened_chest_in_dark_room"]}\n{text["found_nothing"]}\n"
+                    #description += f"~ ~ ~{eventDescription["opened_chest_in_dark_room"]}\n{text["found_nothing"]}\n"
                     input()
             clear()
         case "Inventory":
 
             for item in inventory:
 
-                if item["type"] == "Weapon" or item["type"] == "Armor":
-                    _name = item["name"]
-                    _rar = item["rarity"]
-                    _str = item["req_streng"]
-                    _int = item["req_intell"]
-                    _dmg = item["damage"]
-                    _def = item["defense"]
+                if item[type] == "Weapon" or item[type] == "Armor":
+                    _name = item[name]
+                    _rar = item[rarity]
+                    _str = item[req_streng]
+                    _int = item[req_intell]
+                    _dmg = item[damage]
+                    _def = item[defense]
                     _req= ""
 
                     if _str - endurance > 0:
@@ -326,8 +326,8 @@ You entered the door.
 
                     print_center(f"\n{_name}{_req}{dff}")
                 else:
-                    _name = item["name"]
-                    _rar = item["rarity"]
+                    _name = item[name]
+                    _rar = item[rarity]
                     print_center(f"\n({_rar}%) {_name}")
 
             input()
@@ -336,7 +336,7 @@ You entered the door.
 
         case "Goblin1":
 
-            healthpoint -= randint(1, 30)
+            player["hp"] -= randint(1, 30)
 
             print_center(f'''{read_txt(r"ascii\void.txt")}{c1}A goblin hit your head, it hurts...{c}''')
 
@@ -348,20 +348,17 @@ You entered the door.
 
         case "Found_Item1":
 
-            items = [Weapon_ShortDagger, HealItem_BigPotion, Item_Skull, Item_Papper, HealItem_SmallPotion,
-                     Item_Ash, Item_Dust, ]
-
+            items = [Weapon_ShortDagger, Weapon_DwarfHammer, Item_Skull, HealItem_BigPotion,
+                     HealItem_SmallPotion, Item_Papper, Weapon_MagicWand, Armor_MysticArmor]
             _item = choose_from(items)
-
-            description += eventDescription["open_chest_in_dark_room"]
-
+            description += eventDescription[open_chest_in_dark_room]
             inventory.append(_item)
 
             print_center(f'''
 {read_txt(r"ascii\void.txt")}
-{eventDescription["open_chest_in_dark_room"]}
+{eventDescription[open_chest_in_dark_room]}
 
-{text["found_common"]} {_item["name"]}
+{text["found_common"]} {_item[name]}
 ''')
 
             input()
@@ -370,7 +367,7 @@ You entered the door.
 
         case "Simple_Trap1":
 
-            healthpoint -= randint(1, 10)
+            player["hp"] -= randint(1, 10)
 
             description += "\nIt's a trap inside of the chest!\n"
 

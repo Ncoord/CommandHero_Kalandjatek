@@ -1,13 +1,15 @@
 
-
 # ------------------------------ DECLARING VARIABLES ------------------------------
 
-playerName = ""
-playerClass = ""
-healthpoint = None
-healthpointMax = None
-endurance = None
-intelligence = None
+player = {
+    "name": "",
+    "class": "",
+    "hp": 0,
+    "hp_max": 0,
+    "endur": 0,
+    "intell": 0,
+    "salutation": ""
+}
 
 music = "music/loophero.wav"
 played_music = None

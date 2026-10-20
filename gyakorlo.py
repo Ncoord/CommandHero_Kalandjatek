@@ -36,7 +36,7 @@ class randomname(Enum):
     BLUE: str = "B"
 """
 from operator import index
-from shlex import split
+from shlex import split, join
 
 import items
 
@@ -99,15 +99,6 @@ while True:
 
 '''
 
-#from functions import input_r
-
-from functions import input_r
-
-"""print("> ")
-input_r()"""
-
-
-
 """
 from items import *
 from random import randint
@@ -166,3 +157,10 @@ random_item(items)
 
 """
 
+
+from functions import input_r
+
+
+key = input_r([b"1", b"2", b"3"],[b"i"])
+
+print(key)
