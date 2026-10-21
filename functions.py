@@ -15,30 +15,38 @@ def choose_from(list_of_items):
 
     return chosen_item
 
-def input_r(expected, exclusion):
+def input_r(expected):
+
+    while True:
+        if kbhit():
+            key = getch()
+            if key in expected:
+                return key
+
+
+    """text = ""
     while True:
 
-        text = ""
-        while True:
+        if kbhit():
 
-            if kbhit():
+            key = getch()
 
-                key = getch()
+            if key in expected:
+                
+                if len(text) == 0:
+                    text += key.decode("utf-8")
+                else:
+                    text = text[:-1]
+                    text += key.decode("utf-8")
 
-                if key in expected:
-                    if len(text) == 0:
-                        text += key.decode("utf-8")
-                    else:
-                        text = text[:-1]
-                        text += key.decode("utf-8")
+            elif key in exclusion:
+                text = key.decode("utf-8")
+                return text
 
-                elif key in exclusion:
-                    text = key.decode("utf-8")
-                    #return text
-
-                elif key == b"\r":
-                    return text
-                print(text, end="\r")
+            elif key == b"\r":
+                if text == "":
+                    text = False
+                return text"""
 
 
 

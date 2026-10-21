@@ -158,9 +158,9 @@ random_item(items)
 """
 
 
-from functions import input_r
+from functions import input_r, print_center
 
 
-key = input_r([b"1", b"2", b"3"],[b"i"])
+key = input_r([b"1", b"2", b"3", b"i"])
 
-print(key)
+print_center(f"{key.decode("utf-8")}: got returned")
