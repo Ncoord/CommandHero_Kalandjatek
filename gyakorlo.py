@@ -158,9 +158,16 @@ random_item(items)
 """
 
 
-from functions import input_r, print_center
+from functions import input_r, print_center, set_cursor_center, clear
 
 
-key = input_r([b"1", b"2", b"3", b"i"])
 
-print_center(f"{key.decode("utf-8")}: got returned")
+
+while True:
+    set_cursor_center()
+    key = input_r([b"1", b"2", b"3", b"x"])
+    print(f"{key.decode("utf-8") if type(key) == bytes else key}: got returned")
+    if key == b"x":
+        break
+    else:
+        clear()

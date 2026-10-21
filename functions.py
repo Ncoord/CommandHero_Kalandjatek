@@ -1,5 +1,6 @@
 
 import os
+import sys
 import shutil
 import re
 from pathlib import Path
@@ -22,6 +23,8 @@ def input_r(expected):
             key = getch()
             if key in expected:
                 return key
+        else:
+            return False
 
 
     """text = ""
@@ -77,9 +80,24 @@ def get_item_image(itemname):
     img = ""
     match itemname:
         case "Short Dagger":
+            img = r"ascii\emty.txt"
+
+        case "Great Sword of Might":
+            img = r"ascii\empty.txt"
+
+        case _:
             img = r"ascii\void.txt"
 
     return img
+
+def set_cursor_center():
+    os.system("")
+
+    width = shutil.get_terminal_size().columns
+    center_x = width // 2
+
+    print(f"\033[{center_x}G", end="", flush=True)
+
 
 
 
@@ -119,13 +137,16 @@ def openInventory(inventory,player):
                 _name = f"({_rar}%) {_name}\ndeals {_dmg} dmg\ngives {_def} def"
 
             print_center(f"\n{_name}{_req}{dff}")
+
         elif item["type"] == "HealItem":
             _name = item["name"]
             _rar = item["rarity"]
             _heal = item["healing"]
+
             print_center(f"\n({_rar}%) {_name}\nheals {_heal} hp")
 
         elif item["type"] == "Misc":
             _name = item["name"]
             _rar = item["rarity"]
+
             print_center(f"\n({_rar}%) {_name}")

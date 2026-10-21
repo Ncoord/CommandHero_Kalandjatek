@@ -302,33 +302,7 @@ You entered the door.
             clear()
         case "Inventory":
 
-            for item in inventory:
-
-                if item[type] == "Weapon" or item[type] == "Armor":
-                    _name = item[name]
-                    _rar = item[rarity]
-                    _str = item[req_streng]
-                    _int = item[req_intell]
-                    _dmg = item[damage]
-                    _def = item[defense]
-                    _req= ""
-
-                    if _str - endurance > 0:
-                        _req += "\nrequires +"+str(_str - endurance)+" END."
-
-                    if _int - intelligence > 0:
-                        _req += "\nrequires +" + str(_int - intelligence) + " INT."
-
-                    if _str > endurance or _int > intelligence:
-                        _name = f"{d}({_rar}%) {s}{_name}{sff}"
-                    else:
-                        _name = f"({_rar}%) {_name}"
-
-                    print_center(f"\n{_name}{_req}{dff}")
-                else:
-                    _name = item[name]
-                    _rar = item[rarity]
-                    print_center(f"\n({_rar}%) {_name}")
+            openInventory(inventory, player)
 
             input()
             clear()
@@ -355,7 +329,7 @@ You entered the door.
             inventory.append(_item)
 
             print_center(f'''
-{read_txt(r"ascii\void.txt")}
+{read_txt(get_item_image(_item[name]))}
 {eventDescription[open_chest_in_dark_room]}
 
 {text["found_common"]} {_item[name]}
