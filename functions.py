@@ -16,15 +16,17 @@ def choose_from(list_of_items):
 
     return chosen_item
 
-def input_r(expected):
+def wait_for_key(expected=[], free_type=False):
+
+    expected += ["\r", "\x08"]
 
     while True:
         if kbhit():
-            key = getch()
+            key = getwch()
             if key in expected:
                 return key
-            else:
-                return False
+            elif free_type:
+                return key
 
     """text = ""
     while True:
@@ -50,6 +52,34 @@ def input_r(expected):
                     text = False
                 return text"""
 
+def realtime_input(prompt, keys, exclusion, mono = False, freewriting = False):
+
+    text = ""
+    expected = keys + exclusion
+
+    print(f"{prompt}", end="", flush=True)
+
+    while True:
+
+        key = wait_for_key(expected, freewriting)
+
+        if key in exclusion:
+            return key
+
+        if key != "\r" and key != "\x08":
+            text = text[:-1] if mono else text
+            text += key
+
+        elif key == "\x08":
+            _length = len(str(text))
+            if _length > 0:
+                text = text[:(_length-1)]
+
+        print("\r\033[2K", end="", flush=True)
+        print(f"{prompt}{text}", end="", flush=True)
+
+        if key == "\r" and text:
+            return text
 
 def get_path():
     BASE_DIR = Path(__file__).resolve().parent

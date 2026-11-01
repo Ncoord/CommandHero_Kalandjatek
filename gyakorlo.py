@@ -158,38 +158,24 @@ random_item(items)
 """
 
 
-from functions import input_r, print_center, set_cursor_center, clear
 
-print("> ", end="", flush=True)
-text = ""
-mono = True
+from functions import *
 
 while True:
 
-    key = input_r([b"1", b"2", b"3", b"x", b"\r", b"\x08"])
+    choice = realtime_input("> ",["1", "2", "3"], ["\r"], mono=True)
 
-    if key != False and key != b"\r" and key != b"\x08":
-        text = text[:-1] if mono else text
-        text += key.decode("utf-8")
+    match choice:
+        case "1":
+            print("\n(1) Goblin attack!")
+        case "2":
+            print("\n(2) Skeleton attack!")
+        case "3":
+            print("\n(1) Armored Knight attack!")
+        case _:
+            print(choice, f"quick execute")
 
-    elif key == b"\x08":
-        _length = len(str(text))
-
-        if _length > 0:
-            text = text[:(_length-1)]
-
-    print("\r\033[2K", end="", flush=True)
-    print(">", text, end="", flush=True)
-
-    if key == b"\r" and text:
-        print("\nenter pressed\nchoice is:", text, "\n")
-        break
-
-
-
-
-
-
-
-
-
+"""
+while True:
+    key = wait_for_key(free_type=True)
+    print(key)"""
