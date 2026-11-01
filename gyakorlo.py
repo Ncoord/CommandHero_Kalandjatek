@@ -160,14 +160,36 @@ random_item(items)
 
 from functions import input_r, print_center, set_cursor_center, clear
 
-
-
+print("> ", end="", flush=True)
+text = ""
+mono = True
 
 while True:
-    set_cursor_center()
-    key = input_r([b"1", b"2", b"3", b"x"])
-    print(f"{key.decode("utf-8") if type(key) == bytes else key}: got returned")
-    if key == b"x":
+
+    key = input_r([b"1", b"2", b"3", b"x", b"\r", b"\x08"])
+
+    if key != False and key != b"\r" and key != b"\x08":
+        text = text[:-1] if mono else text
+        text += key.decode("utf-8")
+
+    elif key == b"\x08":
+        _length = len(str(text))
+
+        if _length > 0:
+            text = text[:(_length-1)]
+
+    print("\r\033[2K", end="", flush=True)
+    print(">", text, end="", flush=True)
+
+    if key == b"\r" and text:
+        print("\nenter pressed\nchoice is:", text, "\n")
         break
-    else:
-        clear()
+
+
+
+
+
+
+
+
+

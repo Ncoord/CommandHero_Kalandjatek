@@ -324,12 +324,14 @@ You entered the door.
 
             items = [Weapon_ShortDagger, Weapon_DwarfHammer, Item_Skull, HealItem_BigPotion,
                      HealItem_SmallPotion, Item_Papper, Weapon_MagicWand, Armor_MysticArmor]
+
             _item = choose_from(items)
-            description += eventDescription[open_chest_in_dark_room]
             inventory.append(_item)
 
+            description += eventDescription[open_chest_in_dark_room]
+
             print_center(f'''
-{read_txt(get_item_image(_item[name]))}
+{read_txt(f"{_item[image]}")}
 {eventDescription[open_chest_in_dark_room]}
 
 {text["found_common"]} {_item[name]}

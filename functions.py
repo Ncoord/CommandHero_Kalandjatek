@@ -23,9 +23,8 @@ def input_r(expected):
             key = getch()
             if key in expected:
                 return key
-        else:
-            return False
-
+            else:
+                return False
 
     """text = ""
     while True:
@@ -52,9 +51,6 @@ def input_r(expected):
                 return text"""
 
 
-
-
-
 def get_path():
     BASE_DIR = Path(__file__).resolve().parent
     return BASE_DIR
@@ -76,20 +72,6 @@ def print_center(text):
     for line in text.splitlines():
         print(' ' * ((width - len(ansi.sub('', line))) // 2)+ line)
 
-def get_item_image(itemname):
-    img = ""
-    match itemname:
-        case "Short Dagger":
-            img = r"ascii\emty.txt"
-
-        case "Great Sword of Might":
-            img = r"ascii\empty.txt"
-
-        case _:
-            img = r"ascii\void.txt"
-
-    return img
-
 def set_cursor_center():
     os.system("")
 
@@ -97,8 +79,6 @@ def set_cursor_center():
     center_x = width // 2
 
     print(f"\033[{center_x}G", end="", flush=True)
-
-
 
 
 # ------------------------------- EVENT FUNCTIONS --------------------------------

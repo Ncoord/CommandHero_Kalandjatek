@@ -1,11 +1,10 @@
-
-
 # ------------------------------ DATA OF EVERY ITEM -------------------------------
 
 
 # Dictionary keys
 type = "type"
 name = "name"
+image = "image"
 damage = "damage"
 defense = "defense"
 rarity = "rarity"
@@ -18,6 +17,7 @@ healing = "healing"
 Weapon_GreatSword = {
     type: "Weapon",
     name: "Great Sword of Might",
+    image: r"ascii\empty.txt",
     damage: 89,
     defense: 43,
     rarity: 10,
@@ -28,6 +28,7 @@ Weapon_GreatSword = {
 Weapon_DwarfHammer = {
     type: "Weapon",
     name: "Dwarf's Hammer",
+    image: r"ascii\empty.txt",
     damage: 82,
     defense: 32,
     rarity: 12,
@@ -38,6 +39,7 @@ Weapon_DwarfHammer = {
 Armor_MysticArmor = {
     type: "Armor",
     name: "Mystic Armor",
+    image: r"ascii\empty.txt",
     damage: 0,
     defense: 50,
     rarity: 23,
@@ -48,6 +50,7 @@ Armor_MysticArmor = {
 Weapon_WideShield = {
     type: "Weapon",
     name: "Wide Shield",
+    image: r"ascii\empty.txt",
     damage: 11,
     defense: 43,
     rarity: 21,
@@ -58,6 +61,7 @@ Weapon_WideShield = {
 Weapon_ShortDagger = {
     type: "Weapon",
     name: "Short Dagger",
+    image: r"ascii\empty.txt",
     damage: 25,
     defense: 8,
     rarity: 38,
@@ -68,6 +72,7 @@ Weapon_ShortDagger = {
 Weapon_SpikySpear = {
     type: "Weapon",
     name: "Spiky Spear",
+    image: r"ascii\empty.txt",
     damage: 55,
     defense: 13,
     rarity: 19,
@@ -78,6 +83,7 @@ Weapon_SpikySpear = {
 Weapon_MagicWand = {
     type: "Weapon",
     name: "Wand of Wizards",
+    image: r"ascii\empty.txt",
     damage: 40,
     defense: 10,
     rarity: 28,
@@ -90,6 +96,7 @@ Weapon_MagicWand = {
 HealItem_BigPotion = {
     type: "HealItem",
     name: "Potion of Great Healing",
+    image: r"ascii\empty.txt",
     healing: 75,
     rarity: 10
 }
@@ -97,6 +104,7 @@ HealItem_BigPotion = {
 HealItem_SmallPotion = {
     type: "HealItem",
     name: "Potion of Small Healing",
+    image: r"ascii\empty.txt",
     healing: 25,
     rarity: 24
 }
@@ -106,36 +114,42 @@ HealItem_SmallPotion = {
 Item_Papper = {
     type: "Misc",
     name: "blank sheets of paper",
+    image: r"ascii\empty.txt",
     rarity: 10
 }
 
 Item_Ash = {
     type: "Misc",
     name: "dusty ash",
+    image: r"ascii\empty.txt",
     rarity: 8
 }
 
 Item_Skull = {
     type: "Misc",
     name: "terrifying skull",
+    image: r"ascii\empty.txt",
     rarity: 10
 }
 
 Item_Leather = {
     type: "Misc",
     name: "old leather",
+    image: r"ascii\empty.txt",
     rarity: 6
 }
 
 Item_Pebble = {
     type: "Misc",
     name: "weird shaped pebble",
+    image: r"ascii\empty.txt",
     rarity: 2
 }
 
 Item_Dust = {
     type: "Misc",
     name: "whirling dust",
+    image: r"ascii\empty.txt",
     rarity: 8
 }
 
